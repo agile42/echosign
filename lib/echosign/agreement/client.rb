@@ -8,7 +8,8 @@ module Echosign
    # @return [String] Agreement ID
    def create_agreement(agreement)
      agreement_response = Echosign::Request.create_agreement(agreement, token, agreement.user_id, agreement.user_email)
-     agreement_response.fetch("agreementId")
+     return agreement_response['agreementId'] if agreement_response.has_key?('agreementId')
+     raise "Error creating LOA - response was #{agreement_response}"
    end
 
    # Gets list of agreements
